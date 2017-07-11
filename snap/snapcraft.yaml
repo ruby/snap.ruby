@@ -11,10 +11,11 @@ confinement: strict
 
 apps:
   ruby:
-    command:
-      - ruby
-      - gem
-      - irb
+    command: ruby
+  irb:
+    command: irb
+  rubygems:
+    command: gem
 
 parts:
   ruby:
