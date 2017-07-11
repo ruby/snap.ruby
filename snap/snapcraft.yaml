@@ -1,4 +1,4 @@
-name: ruby
+name: snap-ruby
 version: '2.4.1'
 summary: Interpreter of object-oriented scripting language Ruby
 description: |
