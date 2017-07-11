@@ -1,0 +1,19 @@
+name: ruby
+version: '2.4.1'
+summary: Interpreter of object-oriented scripting language Ruby
+description: |
+  Ruby is the interpreted scripting language for quick and easy object-oriented
+  programming. It has many features to process text files and to do system
+  management tasks (as in perl). It is simple, straight-forward, and extensible.
+
+grade: stable
+confinement: strict
+
+apps:
+  ruby:
+    command: ruby
+
+parts:
+  ruby:
+    plugin: autotools
+    source: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz
