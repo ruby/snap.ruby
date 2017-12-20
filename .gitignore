@@ -4,3 +4,5 @@ prime
 parts
 stage
 
+.vagrant
+*.log
