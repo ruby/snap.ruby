@@ -12,12 +12,32 @@ confinement: strict
 apps:
   ruby:
     command: ruby
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+  erb:
+    command: ruby $SNAP/bin/erb
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
   irb:
-    command: irb
+    command: ruby $SNAP/bin/irb
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
   rdoc:
-    command: rdoc
-  rubygems:
-    command: gem
+    command: ruby $SNAP/bin/rdoc
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+  ri:
+    command: ruby $SNAP/bin/ri
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+  gem:
+    command: ruby $SNAP/bin/gem
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+  rake:
+    command: ruby $SNAP/bin/rake
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
 
 parts:
   ruby:
