@@ -14,6 +14,8 @@ apps:
     command: ruby
   irb:
     command: irb
+  rdoc:
+    command: rdoc
   rubygems:
     command: gem
 
