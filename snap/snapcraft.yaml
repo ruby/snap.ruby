@@ -43,3 +43,4 @@ parts:
   ruby:
     plugin: autotools
     source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
+    build-packages: [libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
