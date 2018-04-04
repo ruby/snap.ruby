@@ -14,10 +14,6 @@ apps:
     command: ruby
     environment:
       RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
-  erb:
-    command: ruby $SNAP/bin/erb
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
   irb:
     command: ruby $SNAP/bin/irb
     environment:
@@ -38,9 +34,26 @@ apps:
     command: ruby $SNAP/bin/rake
     environment:
       RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+      GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
+      GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
+  bundle:
+    command: ruby $SNAP/bin/bundle
+    environment:
+      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+      GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
+      GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
 
 parts:
   ruby:
-    plugin: autotools
+    plugin: make
     source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
     build-packages: [libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
+    prepare: |
+      echo "bundler 1.16.1 https://github.com/bundler/bundler" >> gems/bundled_gems
+      curl -L -O https://rubygems.org/downloads/bundler-1.16.1.gem
+      mv bundler-1.16.1.gem gems
+    build: |
+      ./configure --prefix=
+      make
+      make extract-gems
+      make install DESTDIR=$SNAPCRAFT_PART_INSTALL
