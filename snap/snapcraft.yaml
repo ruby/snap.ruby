@@ -7,7 +7,7 @@ description: |
   management tasks (as in perl). It is simple, straight-forward, and extensible.
 
 grade: stable
-confinement: strict
+confinement: classic
 
 apps:
   ruby:
