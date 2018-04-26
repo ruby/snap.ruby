@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$SNAP_ARCH" == "amd64" ]; then
+  ARCH="x86_64-linux"
+elif [ "$SNAP_ARCH" == "armhf" ]; then
+  ARCH="armv7l-linux-eabihf"
+elif [ "$SNAP_ARCH" == "arm64" ]; then
+  ARCH="aarch64-linux"
+elif [ "$SNAP_ARCH" == "i386" ]; then
+  ARCH="i686-linux"
+fi
+
+export RUBYLIB=$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/$ARCH:$RUBYLIB
+
+exec "$@"
+
