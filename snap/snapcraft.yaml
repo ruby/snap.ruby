@@ -21,14 +21,8 @@ apps:
     command: bin/launch $SNAP/bin/ruby $SNAP/bin/gem
   rake:
     command: bin/launch $SNAP/bin/ruby $SNAP/bin/rake
-    environment:
-      GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
-      GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
   bundle:
     command: bin/launch $SNAP/bin/ruby $SNAP/bin/bundle
-    environment:
-      GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
-      GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
 
 parts:
   launcher:

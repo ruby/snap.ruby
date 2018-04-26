@@ -11,6 +11,7 @@ elif [ "$SNAP_ARCH" == "i386" ]; then
 fi
 
 export RUBYLIB=$SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/$ARCH:$RUBYLIB
+export GEM_HOME=$HOME/.gem:$SNAP/lib/ruby/gems/2.5.0
+export GEM_PATH=$HOME/.gem:$SNAP/lib/ruby/gems/2.5.0
 
 exec "$@"
-
