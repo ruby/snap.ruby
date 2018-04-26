@@ -10,39 +10,32 @@ confinement: classic
 
 apps:
   ruby:
-    command: bin/ruby
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+    command: bin/launch $SNAP/bin/ruby
   irb:
-    command: bin/ruby $SNAP/bin/irb
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/irb
   rdoc:
-    command: bin/ruby $SNAP/bin/rdoc
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/rdoc
   ri:
-    command: bin/ruby $SNAP/bin/ri
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/ri
   gem:
-    command: bin/ruby $SNAP/bin/gem
-    environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/gem
   rake:
-    command: bin/ruby $SNAP/bin/rake
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/rake
     environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
       GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
       GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
   bundle:
-    command: bin/ruby $SNAP/bin/bundle
+    command: bin/launch $SNAP/bin/ruby $SNAP/bin/bundle
     environment:
-      RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/x86_64-linux
       GEM_HOME: $SNAP/lib/ruby/gems/2.5.0
       GEM_PATH: $SNAP/lib/ruby/gems/2.5.0
 
 parts:
+  launcher:
+    plugin: dump
+    source: snap/scripts
+    organize: 
+      "launch": bin/
   ruby:
     plugin: make
     source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
