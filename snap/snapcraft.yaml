@@ -8,39 +8,73 @@ description: |
 grade: stable
 confinement: classic
 
+environment:
+  GEM_HOME: $HOME/.gem
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.5.0
+  RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/$SNAP_ARCH:$RUBYLIB
+
 apps:
   ruby:
-    command: bin/launch $SNAP/bin/ruby
+    command: bin/ruby
+    adapter: none
   irb:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/irb
+    command: bin/irb
+    adapter: none
   rdoc:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/rdoc
+    command: bin/rdoc
+    adapter: none
   ri:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/ri
+    command: bin/ri
+    adapter: none
   gem:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/gem
+    command: bin/gem
+    adapter: none
   rake:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/rake
+    command: bin/rake
+    adapter: none
   bundle:
-    command: bin/launch $SNAP/bin/ruby $SNAP/bin/bundle
+    command: bin/bundle
+    adapter: none
 
 parts:
-  launcher:
-    plugin: dump
-    source: snap/scripts
-    organize: 
-      "launch": bin/
   ruby:
     plugin: make
-    source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
-    prepare: |
+    override-pull: |
+      snapcraftctl pull
       echo "bundler 1.16.1 https://github.com/bundler/bundler" >> gems/bundled_gems
       curl -L -O https://rubygems.org/downloads/bundler-1.16.1.gem
       mv bundler-1.16.1.gem gems
-    build: |
-      ./configure --prefix=
+    override-build: |
+      ./configure --prefix=/
       make
       make extract-gems
       make install DESTDIR=$SNAPCRAFT_PART_INSTALL
-
+      case "$SNAPCRAFT_ARCH_TRIPLET" in
+      "x86_64-linux-gnu")
+        target="x86_64-linux"
+        arch="amd64"
+        ;;
+      "arm-linux-gnueabihf")
+        target="armv7l-linux-eabihf"
+        arch="armhf"
+        ;;
+      "aarch64-linux-gnu")
+        target="aarch64-linux"
+        arch="arm64"
+        ;;
+      "i386-linux-gnu")
+        target="i686-linux"
+        arch="i386"
+        ;;
+      *)
+        echo "Unsupported architecture $SNAPCRAFT_ARCH_TRIPLET"
+        exit 1
+        ;;
+      esac
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.5.0"
+      ln -s "$target" "$root/$arch"
+    override-prime: |
+      snapcraftctl prime
+      find bin/ -type f -exec grep -Iq . {} \; -and -exec sed -i -e 's|^#!//bin/ruby$|#!/snap/ruby/current/bin/ruby|' {} \;
