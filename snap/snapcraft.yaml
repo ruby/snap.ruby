@@ -78,3 +78,8 @@ parts:
     override-prime: |
       snapcraftctl prime
       find bin/ -type f -exec grep -Iq . {} \; -and -exec sed -i -e 's|^#!//bin/ruby$|#!/snap/ruby/current/bin/ruby|' {} \;
+    stage:
+      - -bin/gem
+  gem:
+    source: src
+    plugin: dump
