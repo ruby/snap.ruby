@@ -1,8 +1,10 @@
 require 'erb'
 require 'fileutils'
 
+versions = %w[2.3.8 2.4.5 2.5.3]
+tracks = versions.map{|v| v.split(".")[0..1].join(".") }
+
 task :build do
-  versions = %w[2.3.8 2.4.5 2.5.3]
   versions.each do |v|
     puts "Build #{v} snap package"
 
@@ -16,5 +18,11 @@ task :build do
       `snapcraft clean`
       `snapcraft`
     end
+  end
+end
+
+task :push => :build do
+  versions.each do |v|
+    `snapcraft push ruby_#{v}_amd64.snap`
   end
 end
