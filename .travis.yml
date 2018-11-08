@@ -1,0 +1,19 @@
+dist: trusty
+sudo: true
+
+language: bash
+
+addons:
+    apt:
+      update: true
+
+install:
+  - sudo apt-get --yes install snapd snapcraft
+  - sudo snap install --beta review-tools
+
+before_script:
+  - export PATH=$PATH:/snap/bin
+
+script:
+  - snapcraft
+  - snap-review *.snap
