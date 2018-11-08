@@ -15,6 +15,8 @@ environment:
 
 apps:
   env:
+    command: bin/env
+    adapter: none
   ruby:
     command: bin/ruby
     adapter: none
@@ -82,5 +84,8 @@ parts:
     stage:
       - -bin/gem
   gem:
+    source: src
+    plugin: dump
+  env:
     source: src
     plugin: dump
