@@ -26,3 +26,6 @@ task :push => :build do
     `snapcraft push ruby_#{v}_amd64.snap`
   end
 end
+
+require 'rake/clean'
+Rake::Cleaner.cleanup_files(FileList["*.snap"])
