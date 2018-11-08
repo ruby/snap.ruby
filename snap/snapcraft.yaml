@@ -14,6 +14,7 @@ environment:
   RUBYLIB: $SNAP/lib/ruby/2.5.0:$SNAP/lib/ruby/2.5.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
+  env:
   ruby:
     command: bin/ruby
     adapter: none
