@@ -1,11 +1,10 @@
 name: ruby
 version: '2.5.3'
-summary: Interpreter for the Ruby programming language
+summary: Interpreter of object-oriented scripting language Ruby
 description: |
-  Ruby is an interpreted object-oriented programming language often
-  used for web development. It also offers many scripting features to
-  process plain text and serialized files, or manage system tasks.
-  It is simple, straightforward, and extensible.
+  Ruby is the interpreted scripting language for quick and easy object-oriented
+  programming. It has many features to process text files and to do system
+  management tasks (as in perl). It is simple, straight-forward, and extensible.
 grade: stable
 confinement: classic
 
@@ -43,13 +42,17 @@ apps:
 parts:
   ruby:
     plugin: make
+
     source: https://cache.ruby-lang.org/pub/ruby/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
+
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
     override-pull: |
       snapcraftctl pull
-      echo "bundler 1.17.1 https://github.com/bundler/bundler" >> gems/bundled_gems
-      curl -L -O https://rubygems.org/downloads/bundler-1.17.1.gem
-      mv bundler-1.17.1.gem gems
+
+      echo "bundler 1.17.2 https://github.com/bundler/bundler" >> gems/bundled_gems
+      curl -L -O https://rubygems.org/downloads/bundler-1.17.2.gem
+      mv bundler-1.17.2.gem gems
+
     override-build: |
       ./configure --prefix=/
       make
