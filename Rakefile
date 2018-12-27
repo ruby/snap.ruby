@@ -1,9 +1,10 @@
+
 require 'erb'
 require 'fileutils'
 
 versions = %w[2.3.8 2.4.5 2.5.3]
 tracks = versions.map{|v| v.split(".")[0..1].join(".") }
-bundler_v = "1.17.1"
+bundler_v = "1.17.2"
 
 task :build do
   versions.each do |v|
