@@ -56,7 +56,7 @@ parts:
       mv bundler-<%= bundler_v %>.gem gems
 <% end %>
     override-build: |
-      ./configure --prefix=/
+      ./configure --prefix=/ --enable-shared
       make
       make extract-gems
       make install DESTDIR=$SNAPCRAFT_PART_INSTALL
