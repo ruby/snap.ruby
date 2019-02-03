@@ -1,9 +1,7 @@
 snap/.snapcraft
-snap/snapcraft.yaml
 *.snap
 prime
 parts
 stage
-
 .vagrant
 *.log
