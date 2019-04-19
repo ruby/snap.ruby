@@ -1,7 +1,7 @@
 require 'erb'
 require 'fileutils'
 
-versions = %w[2.3.8 2.4.5 2.5.5 2.6.2]
+versions = %w[2.4.6 2.5.5 2.6.3]
 tracks = versions.map{|v| v.split(".")[0..1].join(".") }
 bundler_v = "2.0.1"
 

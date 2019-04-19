@@ -1,5 +1,5 @@
 name: ruby
-version: '2.6.2'
+version: '2.6.3'
 summary: Interpreter of object-oriented scripting language Ruby
 description: |
   Ruby is the interpreted scripting language for quick and easy object-oriented
