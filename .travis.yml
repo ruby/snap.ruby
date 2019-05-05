@@ -13,4 +13,4 @@ addons:
 
 script:
   - snapcraft
-  - snap-review *.snap
+#  - snap-review *.snap
