@@ -1,5 +1,5 @@
 name: ruby
-version: '2.6.3'
+version: '2.6.4'
 base: core18
 summary: Interpreter for the Ruby programming language
 description: |
@@ -51,9 +51,9 @@ parts:
     override-pull: |
       snapcraftctl pull
 
-      echo "bundler 2.0.1 https://github.com/bundler/bundler" >> gems/bundled_gems
-      curl -L -O https://rubygems.org/downloads/bundler-2.0.1.gem
-      mv bundler-2.0.1.gem gems
+      echo "bundler 2.0.2 https://github.com/bundler/bundler" >> gems/bundled_gems
+      curl -L -O https://rubygems.org/downloads/bundler-2.0.2.gem
+      mv bundler-2.0.2.gem gems
 
     override-build: |
       ./configure --prefix=/ --enable-shared
