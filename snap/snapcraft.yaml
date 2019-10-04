@@ -1,5 +1,5 @@
 name: ruby
-version: '2.6.4'
+version: '2.6.5'
 base: core18
 summary: Interpreter for the Ruby programming language
 description: |
