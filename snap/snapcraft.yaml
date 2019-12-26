@@ -1,5 +1,5 @@
 name: ruby
-version: '2.6.5'
+version: '2.7.0'
 base: core18
 summary: Interpreter for the Ruby programming language
 description: |
@@ -12,8 +12,8 @@ confinement: classic
 
 environment:
   GEM_HOME: $HOME/.gem
-  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.6.0
-  RUBYLIB: $SNAP/lib/ruby/2.6.0:$SNAP/lib/ruby/2.6.0/$SNAP_ARCH:$RUBYLIB
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.7.0
+  RUBYLIB: $SNAP/lib/ruby/2.7.0:$SNAP/lib/ruby/2.7.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
   env:
@@ -45,15 +45,11 @@ parts:
   ruby:
     plugin: make
 
-    source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
     override-pull: |
       snapcraftctl pull
-
-      echo "bundler 2.0.2 https://github.com/bundler/bundler" >> gems/bundled_gems
-      curl -L -O https://rubygems.org/downloads/bundler-2.0.2.gem
-      mv bundler-2.0.2.gem gems
 
     override-build: |
       ./configure --prefix=/ --enable-shared
@@ -82,7 +78,7 @@ parts:
         exit 1
         ;;
       esac
-      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.6.0"
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.7.0"
       ln -s "$target" "$root/$arch"
     override-prime: |
       snapcraftctl prime
