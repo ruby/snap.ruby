@@ -1,5 +1,5 @@
 name: ruby
-version: '2.7.0'
+version: '2.8.0'
 base: core18
 summary: Interpreter for the Ruby programming language
 description: |
@@ -12,8 +12,8 @@ confinement: classic
 
 environment:
   GEM_HOME: $HOME/.gem
-  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.7.0
-  RUBYLIB: $SNAP/lib/ruby/2.7.0:$SNAP/lib/ruby/2.7.0/$SNAP_ARCH:$RUBYLIB
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.8.0
+  RUBYLIB: $SNAP/lib/ruby/2.8.0:$SNAP/lib/ruby/2.8.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
   env:
@@ -47,7 +47,7 @@ parts:
 
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 
-    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
+    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     override-pull: |
       snapcraftctl pull
 
@@ -78,7 +78,7 @@ parts:
         exit 1
         ;;
       esac
-      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.7.0"
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.8.0"
       ln -s "$target" "$root/$arch"
     override-prime: |
       snapcraftctl prime

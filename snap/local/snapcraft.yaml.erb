@@ -49,7 +49,7 @@ parts:
 <% else %>
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 <% end %>
-    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libgdbm-dev]
+    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     override-pull: |
       snapcraftctl pull
 <% if Gem::Version.new(abi_v) < Gem::Version.new("2.8.0") %>
