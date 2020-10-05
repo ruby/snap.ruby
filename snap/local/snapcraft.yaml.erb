@@ -44,7 +44,7 @@ apps:
 parts:
   ruby:
     plugin: make
-<% if Gem::Version.new(abi_v) < Gem::Version.new("2.8.0") %>
+<% if Gem::Version.new(abi_v) < Gem::Version.new("3.0.0") %>
     source: https://cache.ruby-lang.org/pub/ruby/<%= series_v %>/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 <% else %>
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
@@ -52,7 +52,7 @@ parts:
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     override-pull: |
       snapcraftctl pull
-<% if Gem::Version.new(abi_v) < Gem::Version.new("2.8.0") %>
+<% if Gem::Version.new(abi_v) < Gem::Version.new("3.0.0") %>
       echo "bundler <%= bundler_v %> https://github.com/bundler/bundler" >> gems/bundled_gems
       curl -L -O https://rubygems.org/downloads/bundler-<%= bundler_v %>.gem
       mv bundler-<%= bundler_v %>.gem gems
