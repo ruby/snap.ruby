@@ -50,6 +50,7 @@ parts:
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 <% end %>
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
+    stage-packages: [libgdbm5]
     override-pull: |
       snapcraftctl pull
 <% if Gem::Version.new(abi_v) < Gem::Version.new("3.0.0") %>
