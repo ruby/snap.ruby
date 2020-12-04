@@ -51,7 +51,9 @@ parts:
     stage-packages: [libgdbm5]
     override-pull: |
       snapcraftctl pull
-
+      echo "bundler 2.1.4 https://github.com/bundler/bundler" >> gems/bundled_gems
+      curl -L -O https://rubygems.org/downloads/bundler-2.1.4.gem
+      mv bundler-2.1.4.gem gems
     override-build: |
       ./configure --prefix=/ --enable-shared
       make
