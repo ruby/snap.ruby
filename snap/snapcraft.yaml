@@ -1,5 +1,5 @@
 name: ruby
-version: '3.0.0'
+version: '3.1.0'
 base: core18
 summary: Interpreter for the Ruby programming language
 description: |
@@ -12,8 +12,8 @@ confinement: classic
 
 environment:
   GEM_HOME: $HOME/.gem
-  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/3.0.0
-  RUBYLIB: $SNAP/lib/ruby/3.0.0:$SNAP/lib/ruby/3.0.0/$SNAP_ARCH:$RUBYLIB
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/3.1.0
+  RUBYLIB: $SNAP/lib/ruby/3.1.0:$SNAP/lib/ruby/3.1.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
   env:
@@ -51,9 +51,9 @@ parts:
     stage-packages: [libgdbm5]
     override-pull: |
       snapcraftctl pull
-      echo "bundler 2.1.4 https://github.com/bundler/bundler" >> gems/bundled_gems
-      curl -L -O https://rubygems.org/downloads/bundler-2.1.4.gem
-      mv bundler-2.1.4.gem gems
+      echo "bundler 2.2.3 https://github.com/bundler/bundler" >> gems/bundled_gems
+      curl -L -O https://rubygems.org/downloads/bundler-2.2.3.gem
+      mv bundler-2.2.3.gem gems
     override-build: |
       ./configure --prefix=/ --enable-shared
       make
@@ -81,7 +81,7 @@ parts:
         exit 1
         ;;
       esac
-      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/3.0.0"
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/3.1.0"
       ln -s "$target" "$root/$arch"
     override-prime: |
       snapcraftctl prime
