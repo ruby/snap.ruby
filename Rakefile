@@ -3,7 +3,6 @@ require 'fileutils'
 
 versions = %w[2.5.8 2.6.6 2.7.2 3.0.0 3.1.0]
 tracks = versions.map{|v| v.split(".")[0..1].join(".") }
-bundler_v = "2.2.3"
 
 task :build do
   versions.each do |v|
