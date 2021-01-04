@@ -1,0 +1,17 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: build with snapcraft
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo snap install snapcraft --classic
+    - name: Run test
+      run: snapcraft
+      env:
+        SNAPCRAFT_BUILD_ENVIRONMENT: host
