@@ -4,11 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: build (${{ matrix.ruby }} / ${{ matrix.os }})
+    name: build with snapcraft
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: sudo snap install snapcraft --classic
+      run: |
+        sudo snap install multipass --classic
+        sudo snap install snapcraft --classic
     - name: Run test
       run: snapcraft
