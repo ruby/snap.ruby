@@ -1,7 +1,7 @@
 require 'erb'
 require 'fileutils'
 
-versions = %w[2.5.8 2.6.6 2.7.2 3.0.0 3.1.0]
+versions = %w[2.5.9 2.6.7 2.7.3 3.0.1 3.1.0]
 tracks = versions.map{|v| v.split(".")[0..1].join(".") }
 
 task :build do
