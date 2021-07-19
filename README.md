@@ -1,6 +1,6 @@
 # snap.ruby
 
-[![Snap Status](https://build.snapcraft.io/badge/ruby/snap.ruby.svg)](https://build.snapcraft.io/user/ruby/snap.ruby)
+[![ruby](https://snapcraft.io/ruby/badge.svg)](https://snapcraft.io/ruby)
 
 The official ruby packages for snapcraft.io. This is a work in progress.
 
