@@ -1,6 +1,6 @@
 name: ruby
 version: '<%= v %>'
-base: core18
+base: core20
 summary: Interpreter for the Ruby programming language
 description: |
   Ruby is an interpreted object-oriented programming language often
@@ -52,7 +52,7 @@ parts:
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 <% end %>
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
-    stage-packages: [libgdbm5]
+    stage-packages: [libgdbm6]
     override-pull: |
       snapcraftctl pull
     override-build: |

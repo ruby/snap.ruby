@@ -48,7 +48,7 @@ parts:
     source: https://cache.ruby-lang.org/pub/ruby/3.0/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
-    stage-packages: [libgdbm5]
+    stage-packages: [libgdbm6]
     override-pull: |
       snapcraftctl pull
     override-build: |
