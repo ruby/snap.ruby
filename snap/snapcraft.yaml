@@ -52,6 +52,7 @@ parts:
     override-pull: |
       snapcraftctl pull
     override-build: |
+      export DEBIAN_DISABLE_RUBYGEMS_INTEGRATION=true # avoid error: /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb:50:in `<class:Specification>': undefined method `rubyforge_project=' for class `Gem::Specification' (NameError)
       ./configure --prefix=/ --enable-shared
       make
       make extract-gems
