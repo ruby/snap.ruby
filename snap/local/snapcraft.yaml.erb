@@ -47,7 +47,7 @@ apps:
 parts:
   ruby:
     plugin: make
-<% if Gem::Version.new(abi_v) < Gem::Version.new("3.1.0") %>
+<% if Gem::Version.new(abi_v) < Gem::Version.new("3.2.0") %>
     source: https://cache.ruby-lang.org/pub/ruby/<%= series_v %>/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 <% else %>
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
