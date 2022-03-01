@@ -1,5 +1,5 @@
 name: ruby
-version: '3.1.0'
+version: '3.1.1'
 base: core20
 summary: Interpreter for the Ruby programming language
 description: |
@@ -48,7 +48,7 @@ parts:
   ruby:
     plugin: make
 
-    source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 
     build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     stage-packages: [libgdbm6]

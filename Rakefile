@@ -14,10 +14,8 @@ task :build do
     yml = ERB.new(File.read("snap/local/snapcraft.yaml.erb")).result(binding)
     File.open("snap/snapcraft.yaml", "w") {|f| f.puts yml }
 
-    unless File.exist?("ruby_#{v}_amd64.snap")
-      system "snapcraft clean"
-      system "snapcraft"
-    end
+    system "snapcraft clean"
+    system "snapcraft remote-build --build-on=amd64,arm64,armhf,i386 --launchpad-accept-public-upload"
   end
 end
 
