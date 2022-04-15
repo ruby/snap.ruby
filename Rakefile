@@ -18,9 +18,11 @@ task :build do
   end
 end
 
-task :push => :build do
+task :push do
   versions.each do |v|
-    system "snapcraft push ruby_#{v}_amd64.snap"
+    %w[amd64 arm64 armhf].each do |arch|
+      system "snapcraft push ruby_#{v}_#{arch}.snap"
+    end
   end
 end
 
