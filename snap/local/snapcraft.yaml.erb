@@ -38,11 +38,9 @@ apps:
   rake:
     command: bin/rake
     adapter: none
-<% if Gem::Version.new(abi_v) >= Gem::Version.new("2.6.0") %>
   bundle:
     command: bin/bundle
     adapter: none
-<% end %>
 
 parts:
   ruby:
