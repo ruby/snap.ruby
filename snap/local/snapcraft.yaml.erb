@@ -50,7 +50,7 @@ parts:
 <% else %>
     source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
 <% end %>
-    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
+    build-packages: [ruby, gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     stage-packages: [libgdbm6]
     override-pull: |
       snapcraftctl pull
