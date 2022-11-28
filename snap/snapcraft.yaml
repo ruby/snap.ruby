@@ -1,5 +1,5 @@
 name: ruby
-version: '3.1.2'
+version: '2.7.7'
 base: core20
 summary: Interpreter for the Ruby programming language
 description: |
@@ -13,8 +13,8 @@ license: Ruby
 
 environment:
   GEM_HOME: $HOME/.gem
-  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/3.1.0
-  RUBYLIB: $SNAP/lib/ruby/3.1.0:$SNAP/lib/ruby/3.1.0/$SNAP_ARCH:$RUBYLIB
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.7.0
+  RUBYLIB: $SNAP/lib/ruby/2.7.0:$SNAP/lib/ruby/2.7.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
   env:
@@ -38,19 +38,17 @@ apps:
   rake:
     command: bin/rake
     adapter: none
-
   bundle:
     command: bin/bundle
     adapter: none
-
 
 parts:
   ruby:
     plugin: make
 
-    source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 
-    build-packages: [gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
+    build-packages: [ruby, gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     stage-packages: [libgdbm6]
     override-pull: |
       snapcraftctl pull
@@ -82,7 +80,7 @@ parts:
         exit 1
         ;;
       esac
-      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/3.1.0"
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.7.0"
       ln -s "$target" "$root/$arch"
     override-prime: |
       snapcraftctl prime
