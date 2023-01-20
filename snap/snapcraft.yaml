@@ -1,5 +1,5 @@
 name: ruby
-version: '2.7.7'
+version: '3.2.0'
 base: core20
 summary: Interpreter for the Ruby programming language
 description: |
@@ -13,8 +13,8 @@ license: Ruby
 
 environment:
   GEM_HOME: $HOME/.gem
-  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/2.7.0
-  RUBYLIB: $SNAP/lib/ruby/2.7.0:$SNAP/lib/ruby/2.7.0/$SNAP_ARCH:$RUBYLIB
+  GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/3.2.0
+  RUBYLIB: $SNAP/lib/ruby/3.2.0:$SNAP/lib/ruby/3.2.0/$SNAP_ARCH:$RUBYLIB
 
 apps:
   env:
@@ -46,7 +46,7 @@ parts:
   ruby:
     plugin: make
 
-    source: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 
     build-packages: [ruby, gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     stage-packages: [libgdbm6]
@@ -54,7 +54,7 @@ parts:
       snapcraftctl pull
     override-build: |
       export DEBIAN_DISABLE_RUBYGEMS_INTEGRATION=true # avoid error: /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb:50:in `<class:Specification>': undefined method `rubyforge_project=' for class `Gem::Specification' (NameError)
-      ./configure --prefix=/ --enable-shared
+      ./configure --prefix=/ --enable-shared --disable-install-doc
       make
       make extract-gems
       make install DESTDIR=$SNAPCRAFT_PART_INSTALL
@@ -80,7 +80,7 @@ parts:
         exit 1
         ;;
       esac
-      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/2.7.0"
+      root="$SNAPCRAFT_PART_INSTALL/lib/ruby/3.2.0"
       ln -s "$target" "$root/$arch"
     override-prime: |
       snapcraftctl prime
