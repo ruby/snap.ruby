@@ -1,5 +1,5 @@
 name: ruby
-version: '3.2.1'
+version: '3.2.2'
 base: core20
 summary: Interpreter for the Ruby programming language
 description: |
