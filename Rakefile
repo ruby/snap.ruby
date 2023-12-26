@@ -3,6 +3,7 @@ require 'fileutils'
 
 versions = File.read("versions.txt").split
 tracks = versions.map{|v| v.split(".")[0..1].join(".") }
+archs = %w[amd64 arm64 armhf]
 
 task :build do
   versions.each do |v|
@@ -14,13 +15,15 @@ task :build do
     yml = ERB.new(File.read("snap/local/snapcraft.yaml.erb")).result(binding)
     File.open("snap/snapcraft.yaml", "w") {|f| f.puts yml }
 
-    system "snapcraft remote-build --build-on=amd64,arm64,armhf --launchpad-accept-public-upload"
+    archs.each do |arch|
+      system "snapcraft remote-build --build-for=#{arch} --launchpad-accept-public-upload"
+    end
   end
 end
 
 task :push do
   versions.each do |v|
-    %w[amd64 arm64 armhf].each do |arch|
+    archs.each do |arch|
       system "snapcraft push ruby_#{v}_#{arch}.snap"
     end
   end
