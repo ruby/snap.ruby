@@ -24,7 +24,7 @@ end
 task :push do
   versions.each do |v|
     archs.each do |arch|
-      system "snapcraft push ruby_#{v}_#{arch}.snap"
+      system "snapcraft upload ruby_#{v}_#{arch}.snap"
     end
   end
 end
