@@ -15,9 +15,7 @@ task :build do
     yml = ERB.new(File.read("snap/local/snapcraft.yaml.erb")).result(binding)
     File.open("snap/snapcraft.yaml", "w") {|f| f.puts yml }
 
-    archs.each do |arch|
-      system "snapcraft remote-build --build-for=#{arch} --launchpad-accept-public-upload"
-    end
+    system "snapcraft remote-build --build-on=#{arch.join(",")} --launchpad-accept-public-upload"
   end
 end
 
