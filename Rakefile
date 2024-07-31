@@ -19,13 +19,5 @@ task :build do
   end
 end
 
-task :push do
-  versions.each do |v|
-    archs.each do |arch|
-      system "snapcraft upload ruby_#{v}_#{arch}.snap"
-    end
-  end
-end
-
 require 'rake/clean'
 Rake::Cleaner.cleanup_files(FileList["*.snap"])
