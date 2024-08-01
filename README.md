@@ -14,6 +14,8 @@ sudo snap install ruby --classic
 
 ## Development
 
+## Prerequisites
+
 ### Linux
 
 1. `apt install snapcraft`
@@ -28,3 +30,9 @@ We recommend to use multipass and snapcraft package of homebrew.
 3. `brew install —HEAD sergiusens/snapcraft/snapcraft`
 
 You can invoke `snapcraft` command directly on your macOS environment used hyperkit. After that, You can build ruby snap package on this repository used by `snapcraft`.
+
+## Build
+
+```
+ruby build.rb 3.3.4
+```
