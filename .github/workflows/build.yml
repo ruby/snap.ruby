@@ -39,7 +39,7 @@ jobs:
           architecture: ${{ matrix.platform }}
 
       - name: Store ABI version
-        run: echo "ABI_VERSION=$(echo \"${{ env.RUBY_VERSION }}\" | cut -d '.' -f 1-2)" >> $GITHUB_ENV
+        run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
 
       - uses: snapcore/action-publish@v1
         env:
