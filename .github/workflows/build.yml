@@ -5,7 +5,7 @@ on:
     types: [build]
   workflow_dispatch:
     inputs:
-      ruby-version:
+      ruby_version:
         description: 'Ruby versions to build'
         required: true
         default: '3.3.4'
@@ -24,4 +24,4 @@ jobs:
         uses: samuelmeuli/action-snapcraft@v2
 
       - name: Use Snapcraft
-        run: ruby build.rb ${{ github.event.inputs.ruby-version || github.event.client_payload.ruby-version }}
+        run: ruby build.rb ${{ github.event.inputs.ruby_version || github.event.client_payload.ruby_version }}
