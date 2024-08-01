@@ -14,14 +14,38 @@ jobs:
   build:
     name: build with snapcraft
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - amd64
+          - arm64
+          - armhf
     env:
       SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
 
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v2
+      - name: Store Ruby version
+        run: |
+          echo "RUBY_VERSION=${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}" >> $GITHUB_ENV
 
-      - name: Use Snapcraft
-        run: ruby build.rb ${{ github.event.inputs.ruby_version || github.event.client_payload.ruby_version }}
+      - name: Generate template file
+        run: ruby generate.rb ${{ env.RUBY_VERSION }}
+
+      - uses: docker/setup-qemu-action@v1
+
+      - uses: diddlesnaps/snapcraft-multiarch-action@v1
+        id: snapcraft
+        with:
+          architecture: ${{ matrix.platform }}
+
+      - name: Store ABI version
+        run: echo "ABI_VERSION=$(echo \"${{ env.RUBY_VERSION }}\" | cut -d '.' -f 1-2)" >> $GITHUB_ENV
+
+      - uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
+        with:
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: ${{env.ABI_VERSION}}/edge
