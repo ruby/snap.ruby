@@ -46,4 +46,4 @@ jobs:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         with:
           snap: ${{ steps.snapcraft.outputs.snap }}
-          release: ${{env.ABI_VERSION}}/edge
+          release: ${{ env.ABI_VERSION }}/edge
