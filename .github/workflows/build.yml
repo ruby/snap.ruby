@@ -22,7 +22,7 @@ jobs:
           - armhf
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Store Ruby version
         run: |
@@ -31,9 +31,9 @@ jobs:
       - name: Generate template file
         run: ruby generate.rb ${{ env.RUBY_VERSION }}
 
-      - uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1.2.0
 
-      - uses: diddlesnaps/snapcraft-multiarch-action@v1
+      - uses: diddlesnaps/snapcraft-multiarch-action@cfd7a246fad6bea65bb92f69a1c8d07898c231e5 # v1.9.0
         id: snapcraft
         with:
           architecture: ${{ matrix.platform }}
@@ -41,7 +41,7 @@ jobs:
       - name: Store ABI version
         run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
 
-      - uses: snapcore/action-publish@v1
+      - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         with:
