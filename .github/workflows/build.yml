@@ -13,13 +13,16 @@ on:
 jobs:
   build:
     name: build with snapcraft
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-          - amd64
-          - arm64
-          - armhf
+        include:
+          - platform: amd64
+            os: ubuntu-24.04
+          - platform: arm64
+            os: ubuntu-24.04-arm64
+          - platform: armhf
+            os: ubuntu-24.04-arm64
     steps:
       - name: Check out Git repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -31,12 +34,10 @@ jobs:
       - name: Generate template file
         run: ruby generate.rb ${{ env.RUBY_VERSION }}
 
-      - uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
-
-      - uses: diddlesnaps/snapcraft-multiarch-action@cfd7a246fad6bea65bb92f69a1c8d07898c231e5 # v1.9.0
+      - uses:  snapcore/action-build@3bdaa03e1ba6bf59a65f84a751d943d549a54e79 # v1.3.0
         id: snapcraft
         with:
-          architecture: ${{ matrix.platform }}
+          snapcraft-args: --target-arch=${{ matrix.platform }} --enable-experimental-target-arch
 
       - name: Store ABI version
         run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
