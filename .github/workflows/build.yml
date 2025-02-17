@@ -48,3 +48,34 @@ jobs:
         with:
           snap: ${{ steps.snapcraft.outputs.snap }}
           release: ${{ env.ABI_VERSION }}/edge
+
+  build-armhf:
+    name: build armhf with snapcraft
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Store Ruby version
+        run: |
+          echo "RUBY_VERSION=${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}" >> $GITHUB_ENV
+
+      - name: Generate template file
+        run: ruby generate.rb ${{ env.RUBY_VERSION }}
+
+      - uses: docker/setup-qemu-action@53851d14592bedcffcf25ea515637cff71ef929a # v3.3.0
+
+      - uses: diddlesnaps/snapcraft-multiarch-action@cfd7a246fad6bea65bb92f69a1c8d07898c231e5 # v1.9.0
+        id: snapcraft
+        with:
+          architecture: armhf
+
+      - name: Store ABI version
+        run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
+
+      - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+        with:
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: ${{ env.ABI_VERSION }}/edge
