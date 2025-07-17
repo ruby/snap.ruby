@@ -15,6 +15,7 @@ environment:
   GEM_HOME: $HOME/.gem
   GEM_PATH: $HOME/.gem:$SNAP/lib/ruby/gems/<%= abi_v %>
   RUBYLIB: $SNAP/lib/ruby/<%= abi_v %>:$SNAP/lib/ruby/<%= abi_v %>/$SNAP_ARCH:$RUBYLIB
+  LD_LIBRARY_PATH: $SNAP/lib:$LD_LIBRARY_PATH
 
 apps:
   env:
