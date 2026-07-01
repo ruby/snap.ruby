@@ -28,8 +28,14 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Store Ruby version
+        env:
+          RAW_RUBY_VERSION: ${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}
         run: |
-          echo "RUBY_VERSION=${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}" >> $GITHUB_ENV
+          if [[ ! "$RAW_RUBY_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9]+)?$ ]]; then
+            echo "Invalid ruby version: $RAW_RUBY_VERSION" >&2
+            exit 1
+          fi
+          echo "RUBY_VERSION=$RAW_RUBY_VERSION" >> $GITHUB_ENV
 
       - name: Generate template file
         run: ruby generate.rb ${{ env.RUBY_VERSION }}
@@ -64,8 +70,14 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Store Ruby version
+        env:
+          RAW_RUBY_VERSION: ${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}
         run: |
-          echo "RUBY_VERSION=${{ github.event.client_payload.ruby_version || github.event.inputs.ruby_version }}" >> $GITHUB_ENV
+          if [[ ! "$RAW_RUBY_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9]+)?$ ]]; then
+            echo "Invalid ruby version: $RAW_RUBY_VERSION" >&2
+            exit 1
+          fi
+          echo "RUBY_VERSION=$RAW_RUBY_VERSION" >> $GITHUB_ENV
 
       - name: Generate template file
         run: ruby generate.rb ${{ env.RUBY_VERSION }}
