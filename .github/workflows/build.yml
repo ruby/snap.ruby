@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: build with snapcraft
+    name: build with snapcraft (${{ matrix.platform }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -37,7 +37,7 @@ jobs:
       - uses:  snapcore/action-build@3bdaa03e1ba6bf59a65f84a751d943d549a54e79 # v1.3.0
         id: snapcraft
         with:
-          snapcraft-args: --target-arch=${{ matrix.platform }} --enable-experimental-target-arch
+          snapcraft-args: pack
 
       - name: Store ABI version
         run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
