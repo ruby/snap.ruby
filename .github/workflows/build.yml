@@ -60,10 +60,12 @@ jobs:
             fi
             echo "RELEASE=$RELEASE" >> $GITHUB_ENV
           else
-            echo "RELEASE=$ABI_VERSION/edge" >> $GITHUB_ENV
+            # preview/rc builds are not published; latest/edge tracks master.
+            echo "RELEASE=" >> $GITHUB_ENV
           fi
 
       - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
+        if: env.RELEASE != ''
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         with:
@@ -108,10 +110,12 @@ jobs:
             fi
             echo "RELEASE=$RELEASE" >> $GITHUB_ENV
           else
-            echo "RELEASE=$ABI_VERSION/edge" >> $GITHUB_ENV
+            # preview/rc builds are not published; latest/edge tracks master.
+            echo "RELEASE=" >> $GITHUB_ENV
           fi
 
       - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
+        if: env.RELEASE != ''
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         with:
