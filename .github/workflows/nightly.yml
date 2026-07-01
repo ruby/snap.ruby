@@ -1,0 +1,81 @@
+name: nightly
+
+on:
+  schedule:
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+env:
+  # Latest stable ABI series. master builds the next series (minor + 1,
+  # carrying x.5 over to the next major .0), e.g. 4.0 -> 4.1, 3.5 -> 4.0.
+  LATEST_STABLE_TRACK: '4.0'
+
+jobs:
+  build:
+    name: build master with snapcraft
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - platform: amd64
+            os: ubuntu-24.04
+          - platform: arm64
+            os: ubuntu-24.04-arm
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Store Ruby version
+        run: |
+          RUBY_VERSION=$(ruby -e 'major, minor = ENV["LATEST_STABLE_TRACK"].split(".").map(&:to_i); if minor >= 5 then major += 1; minor = 0 else minor += 1 end; puts "#{major}.#{minor}.0"')
+          echo "RUBY_VERSION=$RUBY_VERSION" >> "$GITHUB_ENV"
+
+      - name: Generate template file
+        run: ruby generate.rb "$RUBY_VERSION"
+
+      - uses: snapcore/action-build@3bdaa03e1ba6bf59a65f84a751d943d549a54e79 # v1.3.0
+        id: snapcraft
+        with:
+          snapcraft-args: --target-arch=${{ matrix.platform }} --enable-experimental-target-arch
+
+      - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        with:
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: latest/edge
+
+  build-armhf:
+    name: build master armhf with snapcraft
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Store Ruby version
+        run: |
+          RUBY_VERSION=$(ruby -e 'major, minor = ENV["LATEST_STABLE_TRACK"].split(".").map(&:to_i); if minor >= 5 then major += 1; minor = 0 else minor += 1 end; puts "#{major}.#{minor}.0"')
+          echo "RUBY_VERSION=$RUBY_VERSION" >> "$GITHUB_ENV"
+
+      - name: Generate template file
+        run: ruby generate.rb "$RUBY_VERSION"
+
+      - uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4.1.0
+
+      - uses: diddlesnaps/snapcraft-multiarch-action@cfd7a246fad6bea65bb92f69a1c8d07898c231e5 # v1.9.0
+        id: snapcraft
+        with:
+          architecture: armhf
+
+      - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        with:
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: latest/edge
