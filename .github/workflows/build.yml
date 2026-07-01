@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: build with snapcraft
+    name: build with snapcraft (${{ matrix.platform }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
