@@ -39,15 +39,22 @@ jobs:
         with:
           snapcraft-args: --target-arch=${{ matrix.platform }} --enable-experimental-target-arch
 
-      - name: Store ABI version
-        run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
+      - name: Determine release channel
+        run: |
+          ABI_VERSION=$(echo "$RUBY_VERSION" | cut -d '.' -f 1-2)
+          echo "ABI_VERSION=$ABI_VERSION" >> $GITHUB_ENV
+          if [[ "$RUBY_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "RELEASE=$ABI_VERSION/stable,$ABI_VERSION/edge" >> $GITHUB_ENV
+          else
+            echo "RELEASE=$ABI_VERSION/edge" >> $GITHUB_ENV
+          fi
 
       - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         with:
           snap: ${{ steps.snapcraft.outputs.snap }}
-          release: ${{ env.ABI_VERSION }}/edge
+          release: ${{ env.RELEASE }}
 
   build-armhf:
     name: build armhf with snapcraft
@@ -70,12 +77,19 @@ jobs:
         with:
           architecture: armhf
 
-      - name: Store ABI version
-        run: echo "ABI_VERSION=$(echo ${{ env.RUBY_VERSION }} | cut -d '.' -f 1-2)" >> $GITHUB_ENV
+      - name: Determine release channel
+        run: |
+          ABI_VERSION=$(echo "$RUBY_VERSION" | cut -d '.' -f 1-2)
+          echo "ABI_VERSION=$ABI_VERSION" >> $GITHUB_ENV
+          if [[ "$RUBY_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "RELEASE=$ABI_VERSION/stable,$ABI_VERSION/edge" >> $GITHUB_ENV
+          else
+            echo "RELEASE=$ABI_VERSION/edge" >> $GITHUB_ENV
+          fi
 
       - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
         with:
           snap: ${{ steps.snapcraft.outputs.snap }}
-          release: ${{ env.ABI_VERSION }}/edge
+          release: ${{ env.RELEASE }}
