@@ -41,7 +41,7 @@ parts:
 <% if Gem::Version.new(abi_v) < Gem::Version.new("4.1.0") %>
     source: https://cache.ruby-lang.org/pub/ruby/<%= series_v %>/ruby-$SNAPCRAFT_PROJECT_VERSION.tar.gz
 <% else %>
-    source: https://cache.ruby-lang.org/pub/ruby/snapshot.tar.gz
+    source: https://cache.ruby-lang.org/pub/ruby/snapshot/snapshot-master.tar.gz
 <% end %>
     build-packages: [ruby, gcc, curl, autoconf, bison, libssl-dev, libyaml-dev, libreadline6-dev, zlib1g-dev, libncurses5-dev, libffi-dev, libdb-dev, libgdbm-dev]
     stage-packages: [libgdbm6]
