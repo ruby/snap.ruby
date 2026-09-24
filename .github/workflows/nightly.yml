@@ -41,7 +41,7 @@ jobs:
       - uses: snapcore/action-build@3bdaa03e1ba6bf59a65f84a751d943d549a54e79 # v1.3.0
         id: snapcraft
         with:
-          snapcraft-args: --target-arch=${{ matrix.platform }} --enable-experimental-target-arch
+          snapcraft-args: pack
 
       - uses: snapcore/action-publish@214b86e5ca036ead1668c79afb81e550e6c54d40 # v1.2.0
         env:
