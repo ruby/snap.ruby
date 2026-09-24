@@ -51,7 +51,6 @@ parts:
       export DEBIAN_DISABLE_RUBYGEMS_INTEGRATION=true # avoid error: /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb:50:in `<class:Specification>': undefined method `rubyforge_project=' for class `Gem::Specification' (NameError)
       ./configure --prefix=/ --enable-shared --disable-install-doc
       make
-      make extract-gems
       make install DESTDIR=$SNAPCRAFT_PART_INSTALL
       case "$SNAPCRAFT_ARCH_TRIPLET" in
       "x86_64-linux-gnu")
